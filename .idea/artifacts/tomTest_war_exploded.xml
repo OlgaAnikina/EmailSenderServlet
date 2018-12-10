@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="tomTest:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/tomTest_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="tomTest/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="tomTest" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="application" name="mail" />
+          <element id="library" level="application" name="smtp" />
+          <element id="library" level="application" name="activation" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
