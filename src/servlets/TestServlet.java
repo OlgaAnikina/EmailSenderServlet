@@ -17,7 +17,7 @@ import java.util.Date;
 
 @WebServlet("/test")
 public class TestServlet extends HttpServlet {
-    private static final String USER_PASSWORD = "q9w8e7r6";
+    private static final String USER_PASSWORD = "qwerty";
     private ValidatorMail validatorMail = new ValidatorMail();
 
 
@@ -37,12 +37,12 @@ public class TestServlet extends HttpServlet {
             try {
                 request.setAttribute("useremail", useremail);
                 request.setAttribute("userpassword", userpassword);
-
-                request.setAttribute("data", currentDate);
+                request.setAttribute("currentData", currentDate);
 
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("inner.jsp");
                 requestDispatcher.forward(request, response);
-                EmailSender.sender();
+                EmailSender emailSender = new EmailSender();
+                emailSender.sender();
 
             } catch (ServletException e) {
                 e.printStackTrace();

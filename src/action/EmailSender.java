@@ -1,25 +1,40 @@
 package action;
 
+import com.sun.mail.smtp.SMTPSaslAuthenticator;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 
-public class EmailSender {
-    public static void sender() {
+public class EmailSender extends Authenticator {
+    public void sender() {
 
-        String toMail = "scheduleadm@yandex.ru";
-        String fromMail = "anikina.olga.m@yandex.ru";
+        final String toMail = "schedulead@gmail.com";
+        final String fromMail = "anikina.olga.m@yandex.ru";
+        final String password = "q9w8e7r6";
+
+        System.out.println("SSLEmail Start");
         Properties mailProperties = new Properties();
-        mailProperties.put("mail.smtp.host", "smtp.yandex.ru");
-        mailProperties.put("mail.smtp.port", "465");
-        mailProperties.put("mail.smtp.auth", "true");
-        mailProperties.put("mail.smtp.socketFactory.port", "465");
-        mailProperties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        mailProperties.setProperty("mail.transport.protocol", "smtp");
+        mailProperties.put("mail.smtp.host", "smtp.gmail.com");
+        mailProperties.put("mail.smtp.auth", "true"); // Enabling SMTP Authentication
+        mailProperties.put("mail.smtp.port", "587"); //tls
+        mailProperties.put("mail.debug", "true");
+        mailProperties.put("mail.smtp.socketFactory.port", "465"); //ssl
+        mailProperties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory"); //SSL Factory Class
+        mailProperties.put("mail.smtp.socketFactory.fallback", "false");
+        mailProperties.put("mail.smtp.starttls.enable", "true");
 
 
-        Session session = Session.getDefaultInstance(mailProperties);
+        Authenticator auth = new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(toMail, password);
+            }
+        };
+
+        Session session = Session.getDefaultInstance(mailProperties, auth);
 
         try {
             MimeMessage message = new MimeMessage(session);
@@ -32,8 +47,6 @@ public class EmailSender {
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
-
-
     }
 }
 
